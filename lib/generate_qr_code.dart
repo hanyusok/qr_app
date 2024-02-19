@@ -32,6 +32,7 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
       /* drawing white backgorund because QR code is Black */
       final whitePaint = Paint()..color = Colors.white;
       final recorder = PictureRecorder();
+      final Uint8List pngBytes;
       final canvas = Canvas(recorder,
           Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()));
       canvas.drawRect(
@@ -41,7 +42,11 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
       final picture = recorder.endRecording();
       final img = await picture.toImage(image.width, image.height);
       ByteData? byteData = await img.toByteData(format: ImageByteFormat.png);
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      // if (byteData != null) {
+      pngBytes = byteData!.buffer.asUint8List();
+      //
+      // }
+      // Uint8List pngBytes = byteData.buffer.asUint8List();
       /* file 이름 및 폴더 중복 체크*/
       String fileName = 'qr_code';
       int i = 1;
@@ -85,15 +90,6 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              /* QR 생성된 이미지 */
-              if (urlController.text.isNotEmpty)
-                QrImageView(
-                  data: data,
-                  size: 200,
-                ),
-              const SizedBox(
-                height: 18,
-              ),
               /* QR 컨텐츠 String */
               Container(
                 padding: const EdgeInsets.only(left: 10, right: 10),
@@ -122,6 +118,15 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
                 style: CustomStyle().myBtnStyle,
                 child: const Text('생성'),
               ),
+              const SizedBox(
+                height: 18,
+              ),
+              /* QR 생성된 이미지 */
+              if (urlController.text.isNotEmpty)
+                QrImageView(
+                  data: data,
+                  size: 200,
+                ),
               const SizedBox(
                 height: 18,
               ),
