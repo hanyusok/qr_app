@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_app/generate_qr_code.dart';
 import 'package:qr_app/scan_qr_code.dart';
+import 'custom_style.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +34,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,18 +42,24 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.blue,),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ElevatedButton(onPressed: (){
-            setState(() {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScanQrCode()));
-            });
-          }, child: const Text('QR 스캔')),
+          ElevatedButton(
+              onPressed: (){
+                  setState(() {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScanQrCode()));
+                  });
+                },
+              style: CustomStyle().myBtnStyle,
+              child: const Text('QR 스캔')),
           const SizedBox(height: 40,),
           ElevatedButton(onPressed: (){
             setState(() {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => const GenerateQrCode()));
             });
-          }, child: const Text('QR 생성')),
+          },
+              style: CustomStyle().myBtnStyle,
+              child: const Text('QR 생성')),
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:qr_app/custom_style.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 // import 'package:qr_app/scan_qr_code.dart';
 
@@ -16,11 +17,12 @@ class GenerateQrCode extends StatefulWidget {
 }
 
 class _GenerateQrCodeState extends State<GenerateQrCode> {
-  TextEditingController urlController = TextEditingController();
+  TextEditingController urlController = TextEditingController(text: '');
   String data = '';
   final GlobalKey _qrKey = GlobalKey();
   bool dirExists = false;
-  dynamic externalDir = '/Storage/emulated/0/Download/Qr_code';
+  dynamic externalDir = '/storage/emulated/0/Download/Qr_code';
+
 
   /* png이미지 생성 및 저장하기 */
   Future<void> captureAndSavePng() async {
@@ -84,10 +86,11 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
               Container(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: TextField(
+                  keyboardType: TextInputType.text,
                   controller: urlController,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10),
-                    hintText: '입력하면 QR코드 생성됩니다.',
+                    hintText:  '입력하면 QR코드 생성됩니다.',
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                     labelText: '입력하기',
                   ),
@@ -95,17 +98,19 @@ class _GenerateQrCodeState extends State<GenerateQrCode> {
               ),
               const SizedBox(height: 18,),
               /* 생성하기 button */
-              ElevatedButton(onPressed: (){
+              ElevatedButton(onPressed: () {
                 setState(() {
                   data = urlController.text;
                 });
               },
                 child: const Text('생성'),
+                style: CustomStyle().myBtnStyle,
               ),
               const SizedBox(height: 18,),
               /* 저장하기 button */
               ElevatedButton(onPressed: captureAndSavePng,
                 child: const Text('저장'),
+                style: CustomStyle().myBtnStyle,
               ),
             ],
           ),
